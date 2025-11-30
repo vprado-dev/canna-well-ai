@@ -34,6 +34,24 @@ def load_processed_data():
 @st.cache_resource
 def load_trained_models():
     """Load and cache the trained models."""
+    import os
+
+    # Check if models exist, if not train them
+    if not os.path.exists("models/kmeans_model.pkl"):
+        st.info("🔄 First-time setup: Training models... (this takes ~30 seconds)")
+
+        # Import training function
+        from src.models import train_and_save_models
+
+        # Load and preprocess data
+        df = preprocess_data()
+
+        # Train and save models
+        train_and_save_models(df)
+
+        st.success("✅ Models trained successfully!")
+        st.balloons()
+
     return load_models()
 
 
