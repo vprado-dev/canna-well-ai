@@ -8,8 +8,12 @@ import logging
 from src.config import (
     MEDICAL_COLS,
     POS_EFFECT_COLS,
-    NEG_EFFECT_COLS
+    NEG_EFFECT_COLS,
+    AVAILABLE_LOCALES,
+    DEFAULT_LOCALE,
+    LOCALE_NAMES
 )
+from src.i18n import init_i18n, t, set_locale, get_current_locale
 from src.preprocess import preprocess_data
 from src.models import load_models
 from src.recommender import (
@@ -35,10 +39,11 @@ def load_processed_data():
 def load_trained_models():
     """Load and cache the trained models."""
     import os
+    from src.i18n import t
 
     # Check if models exist, if not train them
     if not os.path.exists("models/kmeans_model.pkl"):
-        st.info("🔄 First-time setup: Training models... (this takes ~30 seconds)")
+        st.info(f"🔄 {t('messages.first_time_setup')}")
 
         # Import training function
         from src.models import train_and_save_models
@@ -49,7 +54,7 @@ def load_trained_models():
         # Train and save models
         train_and_save_models(df)
 
-        st.success("✅ Models trained successfully!")
+        st.success(f"✅ {t('messages.models_trained')}")
         st.balloons()
 
     return load_models()
@@ -58,13 +63,35 @@ def load_trained_models():
 def main():
     """Main Streamlit app."""
 
-    # Page config
+    # Initialize i18n system (must be before set_page_config to get translations)
+    init_i18n(default_locale=DEFAULT_LOCALE)
+
+    # Page config MUST be first Streamlit command
     st.set_page_config(
-        page_title="Cannabis Strain Recommender",
-        page_icon="🌿",
+        page_title=t("app.title"),
+        page_icon=t("app.page_icon"),
         layout="wide",
         initial_sidebar_state="collapsed"
     )
+
+    # Language selector at top (after page config)
+    st.markdown(f"### {t('language.selector_label')}")
+    col_lang1, col_lang2, col_lang3 = st.columns([1, 2, 3])
+    with col_lang1:
+        current_locale = get_current_locale()
+        selected_locale = st.selectbox(
+            "Select language",
+            options=AVAILABLE_LOCALES,
+            format_func=lambda x: LOCALE_NAMES[x],
+            index=AVAILABLE_LOCALES.index(current_locale),
+            key="locale_selector",
+            label_visibility="collapsed"
+        )
+        if selected_locale != current_locale:
+            set_locale(selected_locale)
+            st.rerun()
+
+    st.markdown("---")
 
     # Custom CSS for green theme enhancements
     st.markdown("""
@@ -135,10 +162,8 @@ def main():
     """, unsafe_allow_html=True)
 
     # Header
-    st.title("🌿 Cannabis Strain Recommender")
-    st.markdown(
-        "Find the perfect cannabis strain based on your medical conditions and desired effects."
-    )
+    st.title(f"🌿 {t('app.title')}")
+    st.markdown(t("app.subtitle"))
     st.markdown("---")
 
     # Load data and models
@@ -152,68 +177,71 @@ def main():
         df_med["cluster"] = models["kmeans"].predict(X_medical_scaled)
 
     except Exception as e:
-        st.error(f"Error loading data or models: {e}")
-        st.info("Please make sure you have run `python train_models.py` first.")
+        st.error(t("messages.error_loading", error=str(e)))
+        st.info(t("messages.run_training"))
         st.stop()
 
     # Recommendation method selection
-    st.subheader("🔍 Recommendation Method")
+    st.subheader(f"🔍 {t('sections.recommendation_method')}")
     method = st.radio(
-        "Choose how to find recommendations:",
-        ["Global KNN (Search all strains)", "Cluster-based KNN (Match by medical profile first)"],
-        help="**Global KNN** searches across all 2,921 strains. **Cluster-based KNN** first groups you with similar medical profiles, then searches within that group."
+        t("method.choose_label"),
+        [t("method.global_knn"), t("method.cluster_knn")],
+        help=t("help.method_help")
     )
 
     st.markdown("---")
 
     # User input form
-    st.subheader("📋 Your Profile")
+    st.subheader(f"📋 {t('sections.your_profile')}")
 
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("### Medical Conditions")
+        st.markdown(f"### {t('sections.medical_conditions')}")
         # Sort medical conditions alphabetically, with common ones at top
         common_conditions = ["anxiety", "stress", "pain", "depression", "insomnia"]
         sorted_medical = common_conditions + sorted([c for c in MEDICAL_COLS if c not in common_conditions])
 
         diseases = st.multiselect(
-            "Select the medical conditions you want to treat:",
+            t("form.conditions_label"),
             options=sorted_medical,
-            help="Choose one or more conditions"
+            format_func=lambda x: t(f"medical_conditions.{x}"),
+            help=t("help.conditions_help")
         )
 
-        st.markdown("### Desired Effects")
+        st.markdown(f"### {t('sections.desired_effects')}")
         desired_effects = st.multiselect(
-            "What effects do you want to feel?",
+            t("form.desired_label"),
             options=sorted(POS_EFFECT_COLS),
-            help="Select positive effects you're looking for"
+            format_func=lambda x: t(f"effects.positive.{x}"),
+            help=t("help.desired_help")
         )
 
     with col2:
-        st.markdown("### Effects to Avoid")
+        st.markdown(f"### {t('sections.effects_to_avoid')}")
         avoid_effects = st.multiselect(
-            "What effects do you want to avoid?",
+            t("form.avoid_label"),
             options=sorted(NEG_EFFECT_COLS),
-            help="Select negative effects you want to minimize"
+            format_func=lambda x: t(f"effects.negative.{x}"),
+            help=t("help.avoid_help")
         )
 
-        st.markdown("### Number of Recommendations")
+        st.markdown(f"### {t('sections.num_recommendations')}")
         n_recommendations = st.slider(
-            "How many strains to recommend?",
+            t("form.num_label"),
             min_value=5,
             max_value=20,
             value=10,
-            help="Number of strain recommendations to display"
+            help=t("help.num_help")
         )
 
     st.markdown("---")
 
     # Get recommendations button
-    if st.button("🔎 Get Recommendations", type="primary", use_container_width=True):
+    if st.button(f"🔎 {t('buttons.get_recommendations')}", type="primary", use_container_width=True):
         # Validate input
         if not diseases and not desired_effects:
-            st.warning("⚠️ Please select at least one medical condition or desired effect.")
+            st.warning(f"⚠️ {t('messages.no_selection')}")
             return
 
         # Build user vector
@@ -224,8 +252,8 @@ def main():
         )
 
         # Get recommendations based on selected method
-        with st.spinner("Finding your perfect strains..."):
-            if method.startswith("Global KNN"):
+        with st.spinner(t("messages.finding_strains")):
+            if method == t("method.global_knn"):
                 recommendations = recommend_strains_global_knn(
                     user_vector=user_vector,
                     knn_model=models["knn_model"],
@@ -233,7 +261,7 @@ def main():
                     df=df_med,
                     n_neighbors=n_recommendations
                 )
-                st.info(f"📊 Searched across all {len(df_med)} strains")
+                st.info(f"📊 {t('messages.searched_all', count=len(df_med))}")
             else:
                 recommendations = recommend_strains_cluster_knn(
                     user_vector=user_vector,
@@ -246,15 +274,15 @@ def main():
                 )
                 if not recommendations.empty:
                     cluster_id = recommendations.iloc[0]["cluster"]
-                    st.info(f"📊 Matched to medical profile cluster {cluster_id}")
+                    st.info(f"📊 {t('messages.matched_cluster', cluster_id=cluster_id)}")
 
         # Display results
         if recommendations.empty:
-            st.warning("No recommendations found. Try adjusting your selections.")
+            st.warning(t("messages.no_recommendations"))
             return
 
         st.markdown("---")
-        st.subheader(f"✨ Top {len(recommendations)} Recommendations")
+        st.subheader(f"✨ {t('sections.top_results', count=len(recommendations))}")
 
         # Display each recommendation
         for idx, (_, strain_row) in enumerate(recommendations.iterrows(), 1):
@@ -282,47 +310,47 @@ def main():
                 col_a, col_b, col_c = st.columns([2, 2, 1])
 
                 with col_a:
-                    st.write(f"**Type:** {summary['type']}")
+                    st.write(f"**{t('labels.type')}:** {summary['type']}")
 
                 with col_b:
-                    st.write(f"**THC Level:** {summary['thc_level']}")
+                    st.write(f"**{t('labels.thc_level')}:** {summary['thc_level']}")
 
                 with col_c:
-                    st.write(f"**Distance:** {summary['match_score']}")
-                    st.caption("(lower = better match)")
+                    st.write(f"**{t('labels.distance')}:** {summary['match_score']}")
+                    st.caption(t("labels.lower_is_better"))
 
                 # Positive effects
                 if summary['positive_effects']:
-                    st.markdown("**✅ Positive Effects:**")
+                    st.markdown(f"**✅ {t('labels.positive_effects')}**")
                     st.write(", ".join(summary['positive_effects']))
                 else:
-                    st.write("**✅ Positive Effects:** None above threshold")
+                    st.write(f"**✅ {t('labels.positive_effects')}** {t('labels.none_above_threshold')}")
 
                 # Negative effects
                 if summary['negative_effects']:
-                    st.markdown("**⚠️ Negative Effects:**")
+                    st.markdown(f"**⚠️ {t('labels.negative_effects')}**")
                     st.write(", ".join(summary['negative_effects']))
                 else:
-                    st.write("**⚠️ Negative Effects:** None above threshold")
+                    st.write(f"**⚠️ {t('labels.negative_effects')}** {t('labels.none_above_threshold')}")
 
                 st.markdown("---")
 
     # Footer
     st.markdown("")
     st.markdown("")
-    with st.expander("ℹ️ About this App"):
-        st.markdown("""
-        This app uses machine learning to recommend cannabis strains based on your needs:
+    with st.expander(f"ℹ️ {t('about.title')}"):
+        st.markdown(f"""
+        {t('about.intro')}
 
-        - **K-Means Clustering**: Groups strains by medical effectiveness profiles
-        - **K-Nearest Neighbors (KNN)**: Finds strains most similar to your preferences
+        - {t('about.kmeans')}
+        - {t('about.knn')}
 
-        **Data**: 2,921 strains from Leafly with 39 medical conditions, 13 positive effects, and 6 negative effects.
+        {t('about.data_info')}
 
-        **Distance Score**: This is the Euclidean distance between your profile and each strain in the 58-dimensional feature space.
-        - **Lower values = better matches** (typically 5-15 for good matches)
-        - Not a percentage - it's a similarity metric
-        - The top recommendation has the smallest distance to your ideal profile
+        {t('about.distance_title')}
+        {t('about.distance_lower')}
+        {t('about.distance_not_percent')}
+        {t('about.distance_top')}
         """)
 
 

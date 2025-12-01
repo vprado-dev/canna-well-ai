@@ -56,3 +56,11 @@ DISPLAY_COLS: List[str] = ["name", "type", "thc_level"]
 
 # Limiar de exibição de efeitos (mostrar apenas efeitos acima desta porcentagem)
 EFFECTS_DISPLAY_THRESHOLD: float = 10.0
+
+# Localization / Localização
+AVAILABLE_LOCALES: List[str] = ["en", "pt_BR"]
+DEFAULT_LOCALE: str = "en"
+LOCALE_NAMES: dict = {
+    "en": "🇺🇸 English",
+    "pt_BR": "🇧🇷 Português (BR)"
+}

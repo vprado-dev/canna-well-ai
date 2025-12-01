@@ -1,0 +1,138 @@
+{
+  "app": {
+    "title": "Cannabis Strain Recommender",
+    "subtitle": "Find the perfect cannabis strain based on your medical conditions and desired effects.",
+    "page_icon": "🌿"
+  },
+  "language": {
+    "selector_label": "Language / Idioma"
+  },
+  "sections": {
+    "recommendation_method": "Recommendation Method",
+    "your_profile": "Your Profile",
+    "medical_conditions": "Medical Conditions",
+    "desired_effects": "Desired Effects",
+    "effects_to_avoid": "Effects to Avoid",
+    "num_recommendations": "Number of Recommendations",
+    "top_results": "Top {count} Recommendations"
+  },
+  "medical_conditions": {
+    "anxiety": "Anxiety",
+    "stress": "Stress",
+    "pain": "Pain",
+    "depression": "Depression",
+    "insomnia": "Insomnia",
+    "ptsd": "PTSD",
+    "fatigue": "Fatigue",
+    "lack_of_appetite": "Lack Of Appetite",
+    "headaches": "Headaches",
+    "bipolar_disorder": "Bipolar Disorder",
+    "cancer": "Cancer",
+    "cramps": "Cramps",
+    "gastrointestinal_disorder": "Gastrointestinal Disorder",
+    "inflammation": "Inflammation",
+    "muscle_spasms": "Muscle Spasms",
+    "eye_pressure": "Eye Pressure",
+    "migraines": "Migraines",
+    "asthma": "Asthma",
+    "anorexia": "Anorexia",
+    "arthritis": "Arthritis",
+    "add/adhd": "ADD/ADHD",
+    "muscular_dystrophy": "Muscular Dystrophy",
+    "hypertension": "Hypertension",
+    "glaucoma": "Glaucoma",
+    "pms": "PMS",
+    "seizures": "Seizures",
+    "spasticity": "Spasticity",
+    "spinal_cord_injury": "Spinal Cord Injury",
+    "fibromyalgia": "Fibromyalgia",
+    "crohn's_disease": "Crohn's Disease",
+    "phantom_limb_pain": "Phantom Limb Pain",
+    "epilepsy": "Epilepsy",
+    "multiple_sclerosis": "Multiple Sclerosis",
+    "parkinson's": "Parkinson's",
+    "tourette's_syndrome": "Tourette's Syndrome",
+    "alzheimer's": "Alzheimer's",
+    "hiv/aids": "HIV/AIDS",
+    "tinnitus": "Tinnitus",
+    "nausea": "Nausea"
+  },
+  "effects": {
+    "positive": {
+      "relaxed": "Relaxed",
+      "happy": "Happy",
+      "euphoric": "Euphoric",
+      "uplifted": "Uplifted",
+      "sleepy": "Sleepy",
+      "hungry": "Hungry",
+      "creative": "Creative",
+      "energetic": "Energetic",
+      "giggly": "Giggly",
+      "focused": "Focused",
+      "aroused": "Aroused",
+      "talkative": "Talkative",
+      "tingly": "Tingly"
+    },
+    "negative": {
+      "dry_mouth": "Dry Mouth",
+      "dry_eyes": "Dry Eyes",
+      "dizzy": "Dizzy",
+      "anxious": "Anxious",
+      "paranoid": "Paranoid",
+      "headache": "Headache"
+    }
+  },
+  "labels": {
+    "type": "Type",
+    "thc_level": "THC Level",
+    "distance": "Distance",
+    "lower_is_better": "(lower = better match)",
+    "unknown": "Unknown",
+    "positive_effects": "Positive Effects:",
+    "negative_effects": "Negative Effects:",
+    "none_above_threshold": "None above threshold"
+  },
+  "messages": {
+    "first_time_setup": "First-time setup: Training models... (this takes ~30 seconds)",
+    "models_trained": "Models trained successfully!",
+    "error_loading": "Error loading data or models: {error}",
+    "run_training": "Please make sure you have run `python train_models.py` first.",
+    "no_selection": "Please select at least one medical condition or desired effect.",
+    "no_recommendations": "No recommendations found. Try adjusting your selections.",
+    "finding_strains": "Finding your perfect strains...",
+    "searched_all": "Searched across all {count} strains",
+    "matched_cluster": "Matched to medical profile cluster {cluster_id}"
+  },
+  "buttons": {
+    "get_recommendations": "Get Recommendations"
+  },
+  "help": {
+    "method_help": "**Global KNN** searches across all 2,921 strains. **Cluster-based KNN** first groups you with similar medical profiles, then searches within that group.",
+    "conditions_help": "Choose one or more conditions",
+    "desired_help": "Select positive effects you're looking for",
+    "avoid_help": "Select negative effects you want to minimize",
+    "num_help": "Number of strain recommendations to display"
+  },
+  "method": {
+    "global_knn": "Global KNN (Search all strains)",
+    "cluster_knn": "Cluster-based KNN (Match by medical profile first)",
+    "choose_label": "Choose how to find recommendations:"
+  },
+  "form": {
+    "conditions_label": "Select the medical conditions you want to treat:",
+    "desired_label": "What effects do you want to feel?",
+    "avoid_label": "What effects do you want to avoid?",
+    "num_label": "How many strains to recommend?"
+  },
+  "about": {
+    "title": "About this App",
+    "intro": "This app uses machine learning to recommend cannabis strains based on your needs:",
+    "kmeans": "**K-Means Clustering**: Groups strains by medical effectiveness profiles",
+    "knn": "**K-Nearest Neighbors (KNN)**: Finds strains most similar to your preferences",
+    "data_info": "**Data**: 2,921 strains from Leafly with 39 medical conditions, 13 positive effects, and 6 negative effects.",
+    "distance_title": "**Distance Score**: This is the Euclidean distance between your profile and each strain in the 58-dimensional feature space.",
+    "distance_lower": "- **Lower values = better matches** (typically 5-15 for good matches)",
+    "distance_not_percent": "- Not a percentage - it's a similarity metric",
+    "distance_top": "- The top recommendation has the smallest distance to your ideal profile"
+  }
+}

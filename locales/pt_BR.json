@@ -1,0 +1,138 @@
+{
+  "app": {
+    "title": "Recomendador de Variedades de Cannabis",
+    "subtitle": "Encontre a variedade de cannabis perfeita com base em suas condições médicas e efeitos desejados.",
+    "page_icon": "🌿"
+  },
+  "language": {
+    "selector_label": "Language / Idioma"
+  },
+  "sections": {
+    "recommendation_method": "Método de Recomendação",
+    "your_profile": "Seu Perfil",
+    "medical_conditions": "Condições Médicas",
+    "desired_effects": "Efeitos Desejados",
+    "effects_to_avoid": "Efeitos a Evitar",
+    "num_recommendations": "Número de Recomendações",
+    "top_results": "Top {count} Recomendações"
+  },
+  "medical_conditions": {
+    "anxiety": "Ansiedade",
+    "stress": "Estresse",
+    "pain": "Dor",
+    "depression": "Depressão",
+    "insomnia": "Insônia",
+    "ptsd": "TEPT",
+    "fatigue": "Fadiga",
+    "lack_of_appetite": "Falta de Apetite",
+    "headaches": "Dores de Cabeça",
+    "bipolar_disorder": "Transtorno Bipolar",
+    "cancer": "Câncer",
+    "cramps": "Cãibras",
+    "gastrointestinal_disorder": "Distúrbio Gastrointestinal",
+    "inflammation": "Inflamação",
+    "muscle_spasms": "Espasmos Musculares",
+    "eye_pressure": "Pressão Ocular",
+    "migraines": "Enxaquecas",
+    "asthma": "Asma",
+    "anorexia": "Anorexia",
+    "arthritis": "Artrite",
+    "add/adhd": "DDA/TDAH",
+    "muscular_dystrophy": "Distrofia Muscular",
+    "hypertension": "Hipertensão",
+    "glaucoma": "Glaucoma",
+    "pms": "TPM",
+    "seizures": "Convulsões",
+    "spasticity": "Espasticidade",
+    "spinal_cord_injury": "Lesão Medular",
+    "fibromyalgia": "Fibromialgia",
+    "crohn's_disease": "Doença de Crohn",
+    "phantom_limb_pain": "Dor Fantasma",
+    "epilepsy": "Epilepsia",
+    "multiple_sclerosis": "Esclerose Múltipla",
+    "parkinson's": "Parkinson",
+    "tourette's_syndrome": "Síndrome de Tourette",
+    "alzheimer's": "Alzheimer",
+    "hiv/aids": "HIV/AIDS",
+    "tinnitus": "Zumbido",
+    "nausea": "Náusea"
+  },
+  "effects": {
+    "positive": {
+      "relaxed": "Relaxado(a)",
+      "happy": "Feliz",
+      "euphoric": "Eufórico(a)",
+      "uplifted": "Animado(a)",
+      "sleepy": "Sonolento(a)",
+      "hungry": "Com Fome",
+      "creative": "Criativo(a)",
+      "energetic": "Energético(a)",
+      "giggly": "Risonho(a)",
+      "focused": "Focado(a)",
+      "aroused": "Excitado(a)",
+      "talkative": "Falante",
+      "tingly": "Formigamento"
+    },
+    "negative": {
+      "dry_mouth": "Boca Seca",
+      "dry_eyes": "Olhos Secos",
+      "dizzy": "Tonto(a)",
+      "anxious": "Ansioso(a)",
+      "paranoid": "Paranoico(a)",
+      "headache": "Dor de Cabeça"
+    }
+  },
+  "labels": {
+    "type": "Tipo",
+    "thc_level": "Nível de THC",
+    "distance": "Distância",
+    "lower_is_better": "(menor = melhor combinação)",
+    "unknown": "Desconhecido",
+    "positive_effects": "Efeitos Positivos:",
+    "negative_effects": "Efeitos Negativos:",
+    "none_above_threshold": "Nenhum acima do limiar"
+  },
+  "messages": {
+    "first_time_setup": "Configuração inicial: Treinando modelos... (isso leva ~30 segundos)",
+    "models_trained": "Modelos treinados com sucesso!",
+    "error_loading": "Erro ao carregar dados ou modelos: {error}",
+    "run_training": "Por favor, certifique-se de ter executado `python train_models.py` primeiro.",
+    "no_selection": "Por favor, selecione pelo menos uma condição médica ou efeito desejado.",
+    "no_recommendations": "Nenhuma recomendação encontrada. Tente ajustar suas seleções.",
+    "finding_strains": "Encontrando suas variedades perfeitas...",
+    "searched_all": "Pesquisou em todas as {count} variedades",
+    "matched_cluster": "Correspondeu ao cluster de perfil médico {cluster_id}"
+  },
+  "buttons": {
+    "get_recommendations": "Obter Recomendações"
+  },
+  "help": {
+    "method_help": "**KNN Global** pesquisa em todas as 2.921 variedades. **KNN Baseado em Cluster** primeiro agrupa você com perfis médicos semelhantes e depois pesquisa dentro desse grupo.",
+    "conditions_help": "Escolha uma ou mais condições",
+    "desired_help": "Selecione os efeitos positivos que você procura",
+    "avoid_help": "Selecione os efeitos negativos que você quer minimizar",
+    "num_help": "Número de recomendações de variedades a exibir"
+  },
+  "method": {
+    "global_knn": "KNN Global (Buscar todas as variedades)",
+    "cluster_knn": "KNN Baseado em Cluster (Combinar por perfil médico primeiro)",
+    "choose_label": "Escolha como encontrar recomendações:"
+  },
+  "form": {
+    "conditions_label": "Selecione as condições médicas que você deseja tratar:",
+    "desired_label": "Quais efeitos você quer sentir?",
+    "avoid_label": "Quais efeitos você quer evitar?",
+    "num_label": "Quantas variedades recomendar?"
+  },
+  "about": {
+    "title": "Sobre este Aplicativo",
+    "intro": "Este aplicativo usa aprendizado de máquina para recomendar variedades de cannabis com base em suas necessidades:",
+    "kmeans": "**K-Means Clustering**: Agrupa variedades por perfis de eficácia médica",
+    "knn": "**K-Nearest Neighbors (KNN)**: Encontra variedades mais similares às suas preferências",
+    "data_info": "**Dados**: 2.921 variedades do Leafly com 39 condições médicas, 13 efeitos positivos e 6 efeitos negativos.",
+    "distance_title": "**Pontuação de Distância**: Esta é a distância euclidiana entre seu perfil e cada variedade no espaço de características de 58 dimensões.",
+    "distance_lower": "- **Valores menores = melhores correspondências** (tipicamente 5-15 para boas correspondências)",
+    "distance_not_percent": "- Não é uma porcentagem - é uma métrica de similaridade",
+    "distance_top": "- A recomendação superior tem a menor distância para seu perfil ideal"
+  }
+}

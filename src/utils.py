@@ -89,19 +89,29 @@ def format_effects_list(
     Returns:
         Lista de strings formatadas como ["Relaxed (66%)", "Happy (54%)"]
     """
+    from src.i18n import t
+    from src.config import POS_EFFECT_COLS, NEG_EFFECT_COLS, MEDICAL_COLS
+
     effects = []
 
     for col in effect_cols:
         if col in strain_row.index:
             value = strain_row[col]
             if value >= threshold:
-                # Formata nome da coluna: "dry_mouth" -> "Dry Mouth"
-                formatted_name = col.replace("_", " ").title()
-                # Trata casos especiais
-                formatted_name = formatted_name.replace("Add/Adhd", "ADD/ADHD")
-                formatted_name = formatted_name.replace("Hiv/Aids", "HIV/AIDS")
+                # Traduz o nome do efeito com base no tipo
+                if col in POS_EFFECT_COLS:
+                    translated_name = t(f"effects.positive.{col}")
+                elif col in NEG_EFFECT_COLS:
+                    translated_name = t(f"effects.negative.{col}")
+                elif col in MEDICAL_COLS:
+                    translated_name = t(f"medical_conditions.{col}")
+                else:
+                    # Fallback: formata nome da coluna como antes
+                    translated_name = col.replace("_", " ").title()
+                    translated_name = translated_name.replace("Add/Adhd", "ADD/ADHD")
+                    translated_name = translated_name.replace("Hiv/Aids", "HIV/AIDS")
 
-                effects.append(f"{formatted_name} ({value:.0f}%)")
+                effects.append(f"{translated_name} ({value:.0f}%)")
 
     # Ordena por porcentagem (decrescente)
     effects.sort(key=lambda x: float(x.split("(")[1].split("%")[0]), reverse=True)
