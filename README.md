@@ -188,19 +188,11 @@ Se você atualizar os dados ou algoritmos:
 python train_models.py
 ```
 
-## Licença
-
-[Adicione sua licença aqui]
-
 ## Agradecimentos
 
 - Dataset do Leafly disponível no [Kaggle](https://www.kaggle.com/datasets/gthrosa/leafly-cannabis-strains-metadata)
 - Construído com Streamlit
 - Machine learning com scikit-learn
-
-## Suporte
-
-Para problemas ou perguntas, por favor abra uma issue no GitHub ou entre em contato [seu-contato].
 
 ---
 
@@ -346,19 +338,11 @@ If you update the data or algorithms:
 python train_models.py
 ```
 
-## License
-
-[Add your license here]
-
 ## Acknowledgments
 
 - Dataset from Leafly available on [Kaggle](https://www.kaggle.com/datasets/gthrosa/leafly-cannabis-strains-metadata)
 - Built with Streamlit
 - Machine learning with scikit-learn
-
-## Support
-
-For issues or questions, please open an issue on GitHub or contact [your-contact-info].
 
 ---
 
