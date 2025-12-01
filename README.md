@@ -98,7 +98,7 @@ Isso criará arquivos de modelos treinados no diretório `models/` (~1.3 MB no t
 ### Execute o App Streamlit
 
 ```bash
-streamlit run app.py
+streamlit run streamlit_app.py
 ```
 
 O app será aberto no seu navegador padrão em `http://localhost:8501`.
@@ -248,7 +248,7 @@ This will create trained model files in the `models/` directory (~1.3 MB total).
 ### Run the Streamlit App
 
 ```bash
-streamlit run app.py
+streamlit run streamlit_app.py
 ```
 
 The app will open in your default browser at `http://localhost:8501`.
