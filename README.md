@@ -77,7 +77,6 @@ canna-well-ai/
 
 1. Clone o repositório:
 ```bash
-git clone <your-repo-url>
 cd canna-well-ai
 ```
 
@@ -227,7 +226,6 @@ A machine learning-powered web application for recommending cannabis strains bas
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
 cd canna-well-ai
 ```
 
