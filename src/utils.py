@@ -114,7 +114,8 @@ def format_effects_list(
                 effects.append(f"{translated_name} ({value:.0f}%)")
 
     # Ordena por porcentagem (decrescente)
-    effects.sort(key=lambda x: float(x.split("(")[1].split("%")[0]), reverse=True)
+    # Usa rsplit para pegar o último '(' que contém a porcentagem
+    effects.sort(key=lambda x: float(x.rsplit("(", 1)[1].split("%")[0]), reverse=True)
 
     return effects
 

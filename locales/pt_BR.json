@@ -84,6 +84,7 @@
   },
   "labels": {
     "type": "Tipo",
+    "photo": "Foto",
     "thc_level": "Nível de THC",
     "distance": "Distância",
     "lower_is_better": "(menor = melhor combinação)",

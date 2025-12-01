@@ -3,6 +3,7 @@ Cannabis Strain Recommender - Streamlit App
 """
 
 import streamlit as st
+import pandas as pd
 import logging
 
 from src.config import (
@@ -307,15 +308,24 @@ def main():
             with st.container():
                 st.markdown(f"### {idx}. {summary['name']}")
 
-                col_a, col_b, col_c = st.columns([2, 2, 1])
+                col_a, col_b, col_c, col_d = st.columns([1.5, 1.5, 2, 1])
 
                 with col_a:
                     st.write(f"**{t('labels.type')}:** {summary['type']}")
 
                 with col_b:
-                    st.write(f"**{t('labels.thc_level')}:** {summary['thc_level']}")
+                    # Display photo
+                    img_url = strain_full.get('img_url', '')
+                    if img_url and pd.notna(img_url):
+                        st.markdown(f"**{t('labels.photo')}:**")
+                        st.image(img_url, width=100)
+                    else:
+                        st.write(f"**{t('labels.photo')}:** N/A")
 
                 with col_c:
+                    st.write(f"**{t('labels.thc_level')}:** {summary['thc_level']}")
+
+                with col_d:
                     st.write(f"**{t('labels.distance')}:** {summary['match_score']}")
                     st.caption(t("labels.lower_is_better"))
 
